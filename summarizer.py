@@ -5,19 +5,18 @@ summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 def summarize_text(text):
     if not text.strip():
         return "No description available."
+    # Ensure the text is not too long for the model
+    max_input_length = 1024
+    text = text[:max_input_length]
 
     try:
-        input_length = len(text.split())
-        max_len = min(50, max(15, input_length))  # Adjust dynamically
-        min_len = max(5, int(max_len / 3))
-
         summary = summarizer(
             text,
-            max_length=max_len,
-            min_length=min_len,
+            max_length=120,   
+            min_length=40,    
             do_sample=False
         )
-        return summary[0]['summary_text']
+        return summary[0]['summary_text'].replace("\n", " ").strip()
     except Exception as e:
         print("Summarization error:", e)
         return text
