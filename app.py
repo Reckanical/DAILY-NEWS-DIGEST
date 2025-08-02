@@ -35,7 +35,7 @@ if st.button("🔍 Fetch News"):
         st.error("⚠️ No articles found.")
     else:
         for article in articles:
-            article["summary"] = summarize_text(article["description"])
+            article["summary"] = summarize_text(article.get("content", article["description"]))
 
         filtered_articles = recommend_articles(articles, keywords)
 
