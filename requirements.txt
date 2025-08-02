@@ -3,3 +3,4 @@ requests
 transformers
 torch
 sentencepiece
+newspaper3k
